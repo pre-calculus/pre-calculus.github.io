@@ -1,106 +1,179 @@
 <!DOCTYPE html>
-<html lang="en" id="html" class="html">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QUADRATICS</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadratics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(circle, #01081a, #000611);
+            color: #00eaff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        header {
+            padding: 20px;
+            font-size: 2.8em;
+            text-shadow: 0 0 20px #00eaff, 0 0 30px #00eaff;
+            background: rgba(0, 0, 50, 0.9);
+            box-shadow: 0 0 25px #00eaff;
+        }
+
+        nav {
+            background: #002244;
+            padding: 15px;
+            box-shadow: 0 0 15px #00eaff;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav ul li {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            cursor: pointer;
+            color: #00eaff;
+            text-shadow: 0 0 10px #00eaff;
+            transition: all 0.3s;
+        }
+
+        nav ul li:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        nav ul li .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0, 0, 50, 0.95);
+            box-shadow: 0 0 10px #00eaff;
+            border-radius: 8px;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        nav ul li:hover .dropdown {
+            display: block;
+        }
+
+        .dropdown li {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #00eaff;
+        }
+
+        .dropdown li:hover {
+            background: rgba(0, 255, 255, 0.575);
+        }
+
+        .hero {
+            padding: 50px;
+            background: rgba(0, 0, 80, 0.9);
+            box-shadow: 0 0 30px #00eaff;
+            margin: 30px auto;
+            border-radius: 15px;
+            width: 80%;
+        }
+
+        .animated-text span {
+            opacity: 0;
+            animation: fadeInLetters 0.5s forwards;
+        }
+
+        @keyframes fadeInLetters {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated-text span:nth-child(n) {
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        .signup-button {
+            background: #00aaff;
+            color: white;
+            padding: 18px 36px;
+            font-size: 22px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            border-radius: 8px;
+            box-shadow: 0 0 20px #00eaff;
+        }
+
+        .signup-button:hover {
+            background: #00eaff;
+            box-shadow: 0 0 30px #00aaff;
+        }
+
+        #a {
+            color: #00eaff;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo"> <img id="img-logo" class="img-logo" src="Apex phantom (2).png" alt="logo"> Apex Phantom</div>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="https://everything2learn.github.io/Portfolio/">About</a></li>
-          <li><a href="">Services</a></li>
-          <li><a href="">Contact</a></li>
+    <header>NEON ARENA</header>
+    <nav>
+        <ul>
+            <li>Home</li>
+            <li>About
+                <ul class="dropdown">
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">The Team</a></li>
+                </ul>
+            </li>
+            <li>Games
+                <ul class="dropdown">
+                    <li><a href="formula.html">Action</a></li>
+                    <li><a href="formula.html">Adventure</a></li>
+                    <li><a href="formula.html">Multiplayer</a></li>
+                </ul>
+            </li>
+            <li>Contact</li>
         </ul>
-        <div class="menu-toggle" onclick="toggleMenu()">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </nav>
-      
-      <script>
-        function toggleMenu() {
-          document.querySelector(".nav-links").classList.toggle("active");
-        }
-      </script>
-      
+    </nav>
+    <p>LISTEN UP: IF YOU CLICK "P" WHILE A TEACHER IS LOOKING YOU WILL BE SAFE!!!!!!!!!!!!!!!!!</p>
     <main>
-        
-        <img src="575776 (1).png"  alt="image">
-
-        <br>
-        <center>
-          <a href="algebra.html" hreflang="en">
-          <button  class="enhanced-button">|:START GAMING:|</button>
-          </a>
-          <a href="quadratics.html" hreflang="en">
-          <button onclick="window.location.href='https:'" class="enhanced-button">|:Unblocked Searches:|</button>
-          </a>
-          <a href="trignometry.html" hreflang="en">
-          <button onclick="window.location.href='https:'" class="enhanced-button">|:SOUNDBOARD:|</button>
-        </a>
-        <a href="pre-algebra.html" hreflang="en">
-          <button onclick="window.location.href='https:'" class="enhanced-button">|:Chatroom:|</button>
-        </a>
-      
-          <a href="linearEQUATIONS.html" hreflang="en">
-          <button onclick="window.location.href='https:'" class="enhanced-button">|:About Me:|</button>
-        </a>
-        </center>
-        <div class="container">
-          <section class="left-section">
-            <img src="Apex phantom (2).png" id="img-logo2" class="img-logo2">
-          </section>
-          >
-          <section class="right-section">
-              <p> At Apex Phantom, we believe in pushing the boundaries of innovation and creativity. Founded with a vision to revolutionize the way people interact with technology, our mission is to deliver cutting-edge solutions that inspire, empower, and transform.
-                
-                Driven by a team of passionate thinkers, problem-solvers, and visionaries, we thrive on challenges and embrace the pursuit of excellence. Whether it's through pioneering advancements, seamless user experiences, or groundbreaking designs, we are committed to setting new industry standards.
-                
-                Our philosophy is simple: elevate ideas, redefine possibilities, and leave a lasting impact. We take pride in our meticulous attention to detail, our unwavering commitment to quality, and our dedication to crafting experiences that resonate.
-                
-                As we continue our journey, we invite you to be a part of our story—one that is defined by innovation, fueled by ambition, and shaped by an unrelenting desire to create something extraordinary.
-                
-                Welcome to Apex Phantom. The future starts here.</p>
-          </section>
-      </div>
-       
-            <div id="right-side" class="right-side">
-               <p> At Apex Phantom, we believe in pushing the boundaries of innovation and creativity. Founded with a vision to revolutionize the way people interact with technology, our mission is to deliver cutting-edge solutions that inspire, empower, and transform.
-                
-                Driven by a team of passionate thinkers, problem-solvers, and visionaries, we thrive on challenges and embrace the pursuit of excellence. Whether it's through pioneering advancements, seamless user experiences, or groundbreaking designs, we are committed to setting new industry standards.
-                
-                Our philosophy is simple: elevate ideas, redefine possibilities, and leave a lasting impact. We take pride in our meticulous attention to detail, our unwavering commitment to quality, and our dedication to crafting experiences that resonate.
-                
-                As we continue our journey, we invite you to be a part of our story—one that is defined by innovation, fueled by ambition, and shaped by an unrelenting desire to create something extraordinary.
-                
-                Welcome to Apex Phantom. The future starts here.</p>
-            
-
-        </div>
-
-        <div class="container2">
-          <section class="left-section2">
-            <center>
-              <img id="nooh" class="nooh" src="IMG_5531.jpeg" alt="imageofnooh">
-              </center>
-          </section>
-          
-          <section class="right-section2">
-              <h2>About Nooh</h2>
-              <p>Hi, I'm Nooh—a passionate problem-solver, skilled coder, and tech enthusiast. I have a deep love for programming, constantly pushing my limits to write efficient, elegant, and innovative code. Whether it's building sleek applications, debugging complex algorithms, or optimizing systems, I thrive in the world of logic and creativity.
-
-                Beyond coding, I'm an avid Fortnite player, always strategizing and adapting to challenges in the game. I also have a strong passion for soccer, where teamwork, agility, and precision play a huge role—much like in coding. Another one of my interests is RC cars, where I enjoy fine-tuning and pushing their limits for speed and performance.
-                
-                I believe in continuous learning, innovation, and the power of perseverance. Whether it's on the field, in the virtual world, or behind the screen, I strive to be the best at what I do.</p>
-          </section>
-      </div>
-      
-
+        <section class="hero">
+            <h2 class="animated-text">
+                <script>
+                    const text = "JOIN THE ULTIMATE BATTLE";
+                    document.write(text.split('').map((char, i) => `<span style="--i:${i+1}">${char}</span>`).join(''));
+                </script>
+            </h2>
+            <p>Power up, team up, and dominate the leaderboard!</p>
+           <a href="formula.html"> <button class="signup-button">Sign Up Now</button></a>
+        </section>
     </main>
+    
+    <footer>
+        <p>&copy; 2025 Neon Arena. Are you ready?</p>
+    </footer>
+    
+    <script>
+        document.addEventListener("keydown", function(event) {
+            if (event.key.toLowerCase() === "p") {
+                window.location.href = "https://issaquah.instructure.com/login/canvas"; // Change URL as needed
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Hub Login</title>
+   <link rel="stylesheet" href="styles.css" type="text/css" hreflang="en" lang="en">
+</head>
+<body>
+
+
+  
+    <div class="container" id="auth-container">
+        <h2 id="form-title">Login: Welcome back!</h2>
+        <form id="auth-form">
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <div class="form-group" id="name-group" style="display: none;">
+                <input type="text" id="name" placeholder="Gamer Tag">
+            </div>
+            <div class="form-group" id="age-group" style="display: none;">
+                <input type="number" id="age" placeholder="Age" required>
+            </div>
+            <div class="form-group" id="gender-group" style="display: none;">
+                <select id="gender" class="option" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    
+                </select>
+            </div>
+            <div class="form-group" id="grade-group" style="display: none;">
+                <select id="grade" class="option" required>
+                    <option value="" disabled selected>Select Grade</option>
+                    <option value="1">Grade 1</option>
+                    <option value="2">Grade 2</option>
+                    <option value="3">Grade 3</option>
+                    <option value="4">Grade 4</option>
+                    <option value="5">Grade 5</option>
+                    <option value="6">Grade 6</option>
+                    <option value="7">Grade 7</option>
+                    <option value="8">Grade 8</option>
+                    <option value="9">Grade 9</option>
+                    <option value="10">Grade 10</option>
+                    <option value="11">Grade 11</option>
+                    <option value="12">Grade 12</option>
+            
+                </select>
+            </div>
+
+            <button type="submit">Enter the Arena</button>
+            </form>
+            
+        </form>
+        <p class="toggle" onclick="toggleForm()">Don't have an account? Sign up</p>
+    </div>
+    
+    <div id="sidebar" class="sidebar">
+        <h2>Retro Menu</h2>
+        <ul>
+            <li><a href="#">🏆 Leaderboard</a></li>
+            <li><a onclick="openBlankPage()">🎮 Games</a></li>
+            <li><a href="trignometry.html">🔊 Soundboard</a></li>
+            <li><a href="pre-algebra.html">💬 Chat Room</a></li>
+            <li><a href="quadratics.html">⚙️ Search Engine</a></li>
+            <li onclick="logout()">🙋‍♂️ Logout</li>
+        </ul>
+    </div>
+    <div id="welcome-section">
+        
+        
+        <h1 id="welcome-message"></h1>
+        <p>Welcome to the Ultimate Gaming Hub. Power up and dominate! 🎮🔥</p>
+        <p>LISTEN UP: IF YOU CLICK "P" WHILE A TEACHER IS LOOKING YOU WILL BE SAFE</p>
+       
+        <center>
+        <div  class="text" id="clock"></div>
+        <div  class="text" id="date"></div>
+        <div  class="text" id="location"></div>
+        <div  class="text" id="name-display"></div>
+
+        <div  class="text" id="email-display"></div>
+        <div  class="text" id="age-display"></div>
+        <div  class="text" id="gender-display"></div>
+        <div class="text" id="grade-display"></div>
+        
+        <p  class="text" id="iqDisplay"></p>
+            </center>
+        
+
+     
+       
+       
+   
+  
+        
+        <br>
+        <br>
+        <br>
+
+      
+       
+        <button onclick="logout()">Log Out</button>
+    </div>
+    
+    <script src="app.js" ></script>
+    <script>
+        function openBlankPage() {
+            let newWindow = window.open("about:blank", "_blank");
+            let iframeCode = `<iframe src="https://everything2learn.github.io" width="100%" height="100%" style="border:none; position: absolute; left:0; top:0;"></iframe>`;
+        
+            newWindow.document.open();
+            newWindow.document.write(`<!DOCTYPE html>
+                <html>
+               
+                <body style="margin:0;">
+                    ${iframeCode}
+                     document.addEventListener("keydown", function(event) {
+            if (event.key.toLowerCase() === "p") {
+                window.location.href = "https://issaquah.instructure.com/login/canvas"; // Change URL as needed
+            }
+        });
+                </body>
+                </html>`);
+            newWindow.document.close();
+        }
+        </script>
+         <script>
+            document.addEventListener("keydown", function(event) {
+                if (event.key.toLowerCase() === "p") {
+                    window.location.href = "https://issaquah.instructure.com/login/canvas"; // Change URL as needed
+                }
+            });
+        </script>
+
+    
+</body>
+</html>
