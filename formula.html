@@ -6,14 +6,22 @@
     <title>Gaming Hub Login</title>
    <link rel="stylesheet" href="styles.css" type="text/css" hreflang="en" lang="en">
     <style>
-        #BOLDED {
+        #hello {
               font-size: 3em;
             font-family: "Poppins", sans-serif;
             font-weight: 900;
             color: rgb(139, 0, 0);
            text-shadow: 1px 1px 0px black, -1px -1px 0px black;
          
-        };
+        }
+         .hello {
+              font-size: 3em;
+            font-family: "Poppins", sans-serif;
+            font-weight: 900;
+            color: rgb(139, 0, 0);
+           text-shadow: 1px 1px 0px black, -1px -1px 0px black;
+         
+        }
     </style>
 </head>
 <body>
@@ -22,6 +30,7 @@
   
     <div class="container" id="auth-container">
         <h2 id="form-title">Login: Welcome back!</h2>
+            <strong>    <p class="hello" id="hello" >This page has been visited <span id="visitCount">loading...</span> times.</p></strong>
         <form id="auth-form">
             <div class="form-group">
                 <input type="email" id="email" placeholder="Email" required>
@@ -86,7 +95,8 @@
         <h1 id="welcome-message"></h1>
         <p>Welcome to the Ultimate Gaming Hub. Power up and dominate! 🎮🔥</p>
         <p>LISTEN UP: IF YOU CLICK "P" WHILE A TEACHER IS LOOKING YOU WILL BE SAFE</p>
-    <strong>    <p class="BOLDED">This page has been visited <span id="visitCount">loading...</span> times.</p></strong>
+    <strong>    <h2 class="hello" id="hello" >This page has been visited <span id="visitCount">loading...</span> times.</h2></strong>
+        <p>This has been counting since 2/21/25, 12:51 AM, Issaquah, USA</p>
        
         <center>
         <div  class="text" id="clock"></div>
