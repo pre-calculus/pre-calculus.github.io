@@ -76,6 +76,7 @@
         <h1 id="welcome-message"></h1>
         <p>Welcome to the Ultimate Gaming Hub. Power up and dominate! 🎮🔥</p>
         <p>LISTEN UP: IF YOU CLICK "P" WHILE A TEACHER IS LOOKING YOU WILL BE SAFE</p>
+        <p>This page has been visited <span id="visitCount">loading...</span> times.</p>
        
         <center>
         <div  class="text" id="clock"></div>
@@ -136,7 +137,41 @@
                 }
             });
         </script>
+      <script type="module">
+      // Import necessary Firebase modules
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+      import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
 
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDtKxA-owWWx0Uky2ra8_NChoiOnH8yr-w",
+        authDomain: "visit-counter-64c1b.firebaseapp.com",
+        projectId: "visit-counter-64c1b",
+        storageBucket: "visit-counter-64c1b.firebasestorage.app",
+        messagingSenderId: "749596000003",
+        appId: "1:749596000003:web:80bed54bc8b74a8cb5f336",
+        measurementId: "G-8MDQDH7F3P"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+
+      // Reference to the visit count in the database
+      const visitCounterRef = ref(db, 'visitCount');
+
+      // Get the current visit count from Firebase, increment it, and set the new value
+      get(visitCounterRef).then((snapshot) => {
+        let currentCount = snapshot.exists() ? snapshot.val() : 0; // Default to 0 if no count exists
+        currentCount++; // Increment the count
+        set(visitCounterRef, currentCount); // Save the new count to Firebase
+
+        // Display the visit count on the page
+        document.getElementById('visitCount').innerText = currentCount;
+      }).catch((error) => {
+        console.error("Error reading the visit count:", error);
+      });
+    </script>
     
 </body>
 </html>
