@@ -260,8 +260,367 @@ document.getElementById('auth-form').addEventListener('submit', function(event) 
 });
 
 
+
+
+
+
+// === Helper Functions to Get & Save Data === //
+
+// Get all users from localStorage (or initialize empty)
+function getUsers() {
+    return JSON.parse(localStorage.getItem('users')) || [];
+}
+
+// Save users to localStorage
+function saveUsers(users) {
+    localStorage.setItem('users', JSON.stringify(users));
+}
+
+// Get friendship & follow data
+function getFriendshipData() {
+    return JSON.parse(localStorage.getItem('friendshipData')) || { friends: [], following: [] };
+}
+
+// Save friendship & follow data
+function saveFriendshipData(data) {
+    localStorage.setItem('friendshipData', JSON.stringify(data));
+}
+
+// === User Registration === //
+document.getElementById('auth-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (!name.trim()) {
+        alert('Gamer Tag is required');
+        return;
+    }
+
+    let users = getUsers();
+
+    // Prevent duplicate users
+    if (!users.some(user => user.name === name)) {
+        users.push({ name, email, password });
+        saveUsers(users);
+    }
+
+    alert('User registered successfully!');
+    displayUsers();
+});
+
+// === Friend & Follow Functions === //
+function addFriend(friendName) {
+    let data = getFriendshipData();
+
+    if (!data.friends.includes(friendName)) {
+        data.friends.push(friendName);
+        saveFriendshipData(data);
+        displayUsers();
+    }
+}
+
+function followUser(userName) {
+    let data = getFriendshipData();
+
+    if (!data.following.includes(userName)) {
+        data.following.push(userName);
+        saveFriendshipData(data);
+        displayUsers();
+    }
+}
+
+// === Display Users in Sections === //
+function displayUsers() {
+    let users = getUsers();
+    let data = getFriendshipData();
+
+    const friendsDiv = document.getElementById('friends-list');
+    const followingDiv = document.getElementById('following-list');
+    const usersDiv = document.getElementById('users-list');
+
+    if (!friendsDiv || !followingDiv || !usersDiv) {
+        console.error("One or more user display sections are missing!");
+        return;
+    }
+
+    // Clear previous content
+    friendsDiv.innerHTML = '<h3>👫 Friends</h3>';
+    followingDiv.innerHTML = '<h3>🔔 Following</h3>';
+    usersDiv.innerHTML = '<h3>🌎 All Users</h3>';
+
+    function createUserElement(user) {
+        let userEntry = document.createElement('div');
+        userEntry.classList.add('user-entry');
+        userEntry.innerHTML = `
+            <p>👤 ${user.name}</p>
+            <button class="friend-btn" data-user="${user.name}">➕ Friend</button>
+            <button class="follow-btn" data-user="${user.name}">👀 Follow</button>
+        `;
+        return userEntry;
+    }
+
+    users.forEach(user => {
+        let userElement = createUserElement(user);
+        if (data.friends.includes(user.name)) {
+            friendsDiv.appendChild(userElement);
+        } else if (data.following.includes(user.name)) {
+            followingDiv.appendChild(userElement);
+        } else {
+            usersDiv.appendChild(userElement);
+        }
+    });
+}
+
+// === Event Delegation for Buttons === //
+document.getElementById('users-section').addEventListener('click', function(event) {
+    if (event.target.classList.contains('friend-btn')) {
+        addFriend(event.target.getAttribute('data-user'));
+    } else if (event.target.classList.contains('follow-btn')) {
+        followUser(event.target.getAttribute('data-user'));
+    }
+});
+function changeSection(sectionId) {
+    // Hide all sections
+    const sections = document.querySelectorAll('div[id$="-section"]');
+    sections.forEach(section => {
+        section.style.display = 'none';
+    });
+
+    // Show the selected section
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.style.display = 'block';
+    } else {
+        console.error("Section not found:", sectionId);
+    }
+}
+
+// === Ensure Click Events Work for Buttons === //
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('friend-btn')) {
+        addFriend(event.target.getAttribute('data-user'));
+    } else if (event.target.classList.contains('follow-btn')) {
+        followUser(event.target.getAttribute('data-user'));
+    }
+});
+
+function displayUsers() {
+    let users = getUsers();
+    let data = getFriendshipData();
+
+    const friendsDiv = document.getElementById('friends-list');
+    const followingDiv = document.getElementById('following-list');
+    const usersDiv = document.getElementById('users-list');
+
+    if (!friendsDiv || !followingDiv || !usersDiv) {
+        console.error("One or more user sections are missing!");
+        return;
+    }
+
+    // Clear previous content
+    friendsDiv.innerHTML = '<h3>👫 Friends</h3>';
+    followingDiv.innerHTML = '<h3>🔔 Following</h3>';
+    usersDiv.innerHTML = '<h3>🌎 All Users</h3>';
+
+    function createUserElement(user) {
+        let userEntry = document.createElement('div');
+        userEntry.classList.add('user-entry');
+        
+        // Check if the user is already a friend or following
+        const isFriend = data.friends.includes(user.name);
+        const isFollowing = data.following.includes(user.name);
+
+        // Create buttons dynamically
+        let friendButton = isFriend 
+            ? `<button class="friend-btn" disabled>✅ Friend</button>` 
+            : `<button class="friend-btn" data-user="${user.name}">➕ Friend</button>`;
+        
+        let followButton = isFollowing 
+            ? `<button class="follow-btn" disabled>👀 Following</button>` 
+            : `<button class="follow-btn" data-user="${user.name}">👀 Follow</button>`;
+
+        userEntry.innerHTML = `
+            <p>👤 ${user.name}</p>
+            ${friendButton} ${followButton}
+        `;
+        return userEntry;
+    }
+
+    users.forEach(user => {
+        let userElement = createUserElement(user);
+
+        // Show user in all three sections
+        usersDiv.appendChild(userElement.cloneNode(true)); // Keep in "Users" Section
+        if (data.friends.includes(user.name)) friendsDiv.appendChild(userElement.cloneNode(true));
+        else if (data.following.includes(user.name)) followingDiv.appendChild(userElement.cloneNode(true));
+    });
+}
+
+function displayUsers() {
+    let users = getUsers();
+    let data = getFriendshipData();
+
+    const friendsDiv = document.getElementById('friends-list');
+    const followingDiv = document.getElementById('following-list');
+    const usersDiv = document.getElementById('users-list');
+
+    if (!friendsDiv || !followingDiv || !usersDiv) {
+        console.error("One or more user sections are missing!");
+        return;
+    }
+
+    // Clear previous content
+    friendsDiv.innerHTML = '<h3>👫 Friends</h3>';
+    followingDiv.innerHTML = '<h3>🔔 Following</h3>';
+    usersDiv.innerHTML = '<h3>🌎 All Users</h3>';
+
+    function createUserElement(user) {
+        let userEntry = document.createElement('div');
+        userEntry.classList.add('user-entry');
+        
+        // Check if the user is a friend or following
+        const isFriend = data.friends.includes(user.name);
+        const isFollowing = data.following.includes(user.name);
+
+        // Create buttons dynamically
+        let friendButton = isFriend 
+            ? `<button class="friend-btn" disabled>✅ Friend</button>` 
+            : `<button class="friend-btn" data-user="${user.name}">➕ Friend</button>`;
+        
+        let followButton = isFollowing 
+            ? `<button class="follow-btn" disabled>👀 Following</button>` 
+            : `<button class="follow-btn" data-user="${user.name}">👀 Follow</button>`;
+
+        userEntry.innerHTML = `
+            <p>👤 ${user.name}</p>
+            ${friendButton} ${followButton}
+        `;
+        return userEntry;
+    }
+
+    users.forEach(user => {
+        let userElement = createUserElement(user);
+
+        // Keep users visible in "Users" section
+        usersDiv.appendChild(userElement.cloneNode(true));
+
+        // Show in Friends section if they are a friend
+        if (data.friends.includes(user.name)) friendsDiv.appendChild(userElement.cloneNode(true));
+
+        // Show in Following section if they are being followed
+        if (data.following.includes(user.name)) followingDiv.appendChild(userElement.cloneNode(true));
+    });
+}
+// Ensure click events work for buttons
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('friend-btn')) {
+        toggleFriend(event.target.getAttribute('data-user'));
+    } else if (event.target.classList.contains('follow-btn')) {
+        toggleFollow(event.target.getAttribute('data-user'));
+    }
+});
+
+
+// === Ensure Users Load on Page Refresh === //
+document.addEventListener('DOMContentLoaded', () => {
+    displayUsers();
+});
+
+function displayUsers() {
+    let users = getUsers();
+    let data = getFriendshipData();
+
+    const friendsDiv = document.getElementById('friends-list');
+    const followingDiv = document.getElementById('following-list');
+    const usersDiv = document.getElementById('users-list');
+
+    if (!friendsDiv || !followingDiv || !usersDiv) {
+        console.error("One or more user sections are missing!");
+        return;
+    }
+
+    // Clear previous content
+    friendsDiv.innerHTML = '<h3>👫 Friends</h3>';
+    followingDiv.innerHTML = '<h3>🔔 Following</h3>';
+    usersDiv.innerHTML = '<h3>🌎 All Users</h3>';
+
+    function createUserElement(user) {
+        let userEntry = document.createElement('div');
+        userEntry.classList.add('user-entry');
+        
+        // Check if the user is a friend or following
+        const isFriend = data.friends.includes(user.name);
+        const isFollowing = data.following.includes(user.name);
+
+        // Create dynamic buttons for friending & following
+        let friendButton = `<button class="friend-btn" data-user="${user.name}">
+            ${isFriend ? '❌ Unfriend' : '➕ Friend'}
+        </button>`;
+
+        let followButton = `<button class="follow-btn" data-user="${user.name}">
+            ${isFollowing ? '🚫 Unfollow' : '👀 Follow'}
+        </button>`;
+
+        userEntry.innerHTML = `
+            <p>👤 ${user.name}</p>
+            ${friendButton} ${followButton}
+        `;
+        return userEntry;
+    }
+
+    users.forEach(user => {
+        let userElement = createUserElement(user);
+
+        // Keep users visible in "Users" section
+        usersDiv.appendChild(userElement.cloneNode(true));
+
+        // Show in Friends section if they are a friend
+        if (data.friends.includes(user.name)) friendsDiv.appendChild(userElement.cloneNode(true));
+
+        // Show in Following section if they are being followed
+        if (data.following.includes(user.name)) followingDiv.appendChild(userElement.cloneNode(true));
+    });
+}
+
+function toggleFriend(friendName) {
+    let data = getFriendshipData();
+
+    if (data.friends.includes(friendName)) {
+        // If already a friend, remove from friends list
+        data.friends = data.friends.filter(name => name !== friendName);
+    } else {
+        // Otherwise, add as a friend
+        data.friends.push(friendName);
+    }
+
+    saveFriendshipData(data);
+    displayUsers(); // Refresh UI
+}
+
+function toggleFollow(userName) {
+    let data = getFriendshipData();
+
+    if (data.following.includes(userName)) {
+        // If already following, remove from following list
+        data.following = data.following.filter(name => name !== userName);
+    } else {
+        // Otherwise, add as following
+        data.following.push(userName);
+    }
+
+    saveFriendshipData(data);
+    displayUsers(); // Refresh UI
+}
+
+ 
+
+
+
+
 window.onload = checkLoginStatus;
 
 setInterval(updateClock, 1000);
 updateClock();
-detectLocation();

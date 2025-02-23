@@ -81,7 +81,11 @@
     <div id="sidebar" class="sidebar">
         <h2>Retro Menu</h2>
         <ul>
+            <li><a onclick="changeSection('welcome-section')">🏠Home</a></li>
+    
             <li><a href="#" onclick="changeSection('users-section')">👥 Users</a></li>
+<li><a href="#" onclick="changeSection('friends-section')">👫 Friends</a></li>
+<li><a href="#" onclick="changeSection('following-section')">🔔 Following</a></li>
 
             <li><a onclick="openBlankPage()">🎮 Games</a></li>
             <li><a href="trignometry.html">🔊 Soundboard</a></li>
@@ -117,7 +121,6 @@
        
    
   
-            <div id="leaderboard"></div>
 
 
       
@@ -126,16 +129,209 @@
         <button onclick="logout()">Log Out</button>
     </div>
 
-       
+
+    
+   
+
     <div id="users-section" style="display: none;">
-        <h2>Users</h2>
-        <div id="friends-list"></div>
-        <div id="following-list"></div>
+      
         <div id="users-list"></div>
+    </div>
+    
+    <div id="friends-section" style="display: none;">
+    
+        <div id="friends-list"></div>
+    </div>
+    
+    <div id="following-section" style="display: none;">
+     
+        <div id="following-list"></div>
     </div>
     
     
     
+    
+    <script>// === Helper Functions to Get & Save Data === //
+
+        // Get all users from localStorage (or initialize empty)
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('users')) || [];
+        }
+        
+        // Save users to localStorage
+        function saveUsers(users) {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+        
+        // Get friendship & follow data
+        function getFriendshipData() {
+            return JSON.parse(localStorage.getItem('friendshipData')) || { friends: [], following: [] };
+        }
+        
+        // Save friendship & follow data
+        function saveFriendshipData(data) {
+            localStorage.setItem('friendshipData', JSON.stringify(data));
+        }
+        
+        // === User Registration === //
+        document.getElementById('auth-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+        
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+        
+            if (!name.trim()) {
+                alert('Gamer Tag is required');
+                return;
+            }
+        
+            let users = getUsers();
+        
+            // Prevent duplicate users
+            if (!users.some(user => user.name === name)) {
+                users.push({ name, email, password });
+                saveUsers(users);
+            }
+        
+            alert('User registered successfully!');
+            displayUsers();
+        });
+        
+        // === Friend & Follow Functions === //
+        function addFriend(friendName) {
+            let data = getFriendshipData();
+            if (!data.friends.includes(friendName)) {
+                data.friends.push(friendName);
+                saveFriendshipData(data);
+                displayUsers();
+            }
+        }
+        
+        function followUser(userName) {
+            let data = getFriendshipData();
+            if (!data.following.includes(userName)) {
+                data.following.push(userName);
+                saveFriendshipData(data);
+                displayUsers();
+            }
+        }
+        
+        // === Display Users in Sections === //
+        function displayUsers() {
+            let users = getUsers();
+            let data = getFriendshipData();
+        
+            const friendsDiv = document.getElementById('friends-list');
+            const followingDiv = document.getElementById('following-list');
+            const usersDiv = document.getElementById('users-list');
+        
+            if (!friendsDiv || !followingDiv || !usersDiv) {
+                console.error("One or more user display sections are missing!");
+                return;
+            }
+        
+            // Clear previous content
+            friendsDiv.innerHTML = '<h3>👫 Friends</h3>';
+            followingDiv.innerHTML = '<h3>🔔 Following</h3>';
+            usersDiv.innerHTML = '<h3>🌎 All Users</h3>';
+        
+            function createUserElement(user) {
+                let userEntry = document.createElement('div');
+                userEntry.classList.add('user-entry');
+                userEntry.innerHTML = `
+                    <p>👤 ${user.name}</p>
+                    <button class="friend-btn" data-user="${user.name}">➕ Friend</button>
+                    <button class="follow-btn" data-user="${user.name}">👀 Follow</button>
+                `;
+                return userEntry;
+            }
+        
+            users.forEach(user => {
+                let userElement = createUserElement(user);
+                if (data.friends.includes(user.name)) {
+                    friendsDiv.appendChild(userElement);
+                } else if (data.following.includes(user.name)) {
+                    followingDiv.appendChild(userElement);
+                } else {
+                    usersDiv.appendChild(userElement);
+                }
+            });
+        }
+        
+        // === Event Delegation for Buttons === //
+        document.getElementById('users-section').addEventListener('click', function(event) {
+            if (event.target.classList.contains('friend-btn')) {
+                addFriend(event.target.getAttribute('data-user'));
+            } else if (event.target.classList.contains('follow-btn')) {
+                followUser(event.target.getAttribute('data-user'));
+            }
+        });
+        
+        // === Section Changing Function === //
+        function changeSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('div[id$="-section"]');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+        
+            // Show the selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            } else {
+                console.error("Section not found:", sectionId);
+            }
+        }
+        function displayUsers() {
+    let users = getUsers();
+    let data = getFriendshipData();
+
+    const friendsDiv = document.getElementById('friends-list');
+    const followingDiv = document.getElementById('following-list');
+    const usersDiv = document.getElementById('users-list');
+
+    if (!friendsDiv || !followingDiv || !usersDiv) {
+        console.error("One or more user sections are missing!");
+        return;
+    }
+
+    // Clear previous content
+    friendsDiv.innerHTML = '<h3>👫 Friends</h3>';
+    followingDiv.innerHTML = '<h3>🔔 Following</h3>';
+    usersDiv.innerHTML = '<h3>🌎 All Users</h3>';
+
+    function createUserElement(user) {
+        let userEntry = document.createElement('div');
+        userEntry.classList.add('user-entry');
+        userEntry.innerHTML = `
+            <p>👤 ${user.name}</p>
+            <button class="friend-btn" data-user="${user.name}">➕ Friend</button>
+            <button class="follow-btn" data-user="${user.name}">👀 Follow</button>
+        `;
+        return userEntry;
+    }
+
+    users.forEach(user => {
+        let userElement = createUserElement(user);
+        if (data.friends.includes(user.name)) {
+            friendsDiv.appendChild(userElement);
+        } else if (data.following.includes(user.name)) {
+            followingDiv.appendChild(userElement);
+        } else {
+            usersDiv.appendChild(userElement);
+        }
+    });
+}
+
+        
+        // === Ensure Users Load & Default Section is Displayed === //
+        document.addEventListener('DOMContentLoaded', function() {
+            displayUsers();
+       
+        });
+        </script>
     <script src="app.js" ></script>
     <script>
         function openBlankPage() {

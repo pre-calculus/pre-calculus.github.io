@@ -294,5 +294,58 @@ select:hover {
             border-radius: 12px;
             backdrop-filter: blur(15px);
         }
-        
-        
+        .user-entry {
+          background: rgba(0, 0, 50, 0.8);
+          padding: 10px;
+          margin: 5px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px #00eaff;
+          text-align: center;
+          color: white;
+      }
+      
+      .user-entry p {
+          font-size: 18px;
+          margin-bottom: 5px;
+      }
+      
+      .friend-btn, .follow-btn {
+          background-color: #0044ff;
+          color: white;
+          border: none;
+          padding: 8px 12px;
+          margin: 5px;
+          cursor: pointer;
+          border-radius: 5px;
+          transition: all 0.3s ease-in-out;
+      }
+      
+      .friend-btn:hover {
+          background-color: #00bbff;
+      }
+      
+      .follow-btn:hover {
+          background-color: #ff6600;
+      }
+      .friend-btn, .follow-btn {
+        display: inline-block;
+        background-color: #0044ff;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        margin: 5px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: all 0.3s ease-in-out;
+        z-index: 10; /* Ensure buttons are on top */
+        position: relative;
+    }
+    
+    .friend-btn:hover {
+        background-color: #00bbff;
+    }
+    
+    .follow-btn:hover {
+        background-color: #ff6600;
+    }
+  
