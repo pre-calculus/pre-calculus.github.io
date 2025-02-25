@@ -22,6 +22,12 @@
            text-shadow: 1px 1px 0px black, -1px -1px 0px black;
          
         }
+        body {
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+}
+
     </style>
 </head>
 <body>
@@ -396,6 +402,8 @@
       }).catch((error) => {
         console.error("Error reading the visit count:", error);
       });
+          document.body.style.overflow = 'auto';
+
     </script>
     
 </body>
